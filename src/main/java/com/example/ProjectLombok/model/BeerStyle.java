@@ -1,4 +1,4 @@
-package model;
+package com.example.ProjectLombok.model;
 
 /**
  * Created by jt, Spring Framework Guru.
