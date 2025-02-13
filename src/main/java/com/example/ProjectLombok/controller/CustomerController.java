@@ -19,6 +19,13 @@ import java.util.UUID;
 @RequestMapping("api/v1/customer")
 public class CustomerController {
 
+    @PatchMapping("{customerId}")
+    public ResponseEntity patchCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer){
+        customerService.patchCustomerById(customerId, customer);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
     //I did this without checking the tutorial.  It does work with the request body entered but this is not necessary
     //look at the beer example which shows there's no need for the @RequestBody annotation
     @DeleteMapping("{customerId}")

@@ -4,6 +4,7 @@ package com.example.ProjectLombok.services;
 import com.example.ProjectLombok.model.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -90,5 +91,17 @@ public class CustomerServiceImpl implements CustomerService {
         customerMap.remove(customerId, existing);
 
         log.debug("Customer with Id: " + existing.getId().toString() + " has been removed");
+    }
+
+    @Override
+    public void patchCustomerById(UUID customerId, Customer customer) {
+        Customer existing = customerMap.get(customerId);
+
+        if(StringUtils.hasText(customer.getCustomerName())){
+            existing.setCustomerName(customer.getCustomerName());
+        }
+        if(customer.getVersion() != null){
+            existing.setVersion(customer.getVersion());
+        }
     }
 };
