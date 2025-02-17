@@ -1,6 +1,6 @@
 package com.example.ProjectLombok.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.example.ProjectLombok.model.Beer;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +17,7 @@ import java.util.UUID;
  * Created by jt, Spring Framework Guru.
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/beer")
 public class BeerController {
