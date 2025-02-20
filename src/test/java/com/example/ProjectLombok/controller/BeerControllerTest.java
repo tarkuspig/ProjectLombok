@@ -41,7 +41,7 @@ class BeerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()", is(4)));
+                .andExpect(jsonPath("$.length()", is(3)));
 
 
     }
