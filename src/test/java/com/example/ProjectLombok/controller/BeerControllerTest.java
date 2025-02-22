@@ -3,6 +3,8 @@ package com.example.ProjectLombok.controller;
 import com.example.ProjectLombok.model.Beer;
 import com.example.ProjectLombok.services.BeerService;
 import com.example.ProjectLombok.services.BeerServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,6 +20,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.lang.runtime.ObjectMethods;
 import java.util.UUID;
 
 //@SpringBootTest
@@ -27,11 +30,24 @@ class BeerControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper; //Springboot takes care of object mapping here
+
     @MockitoBean
     BeerService beerService;
 
     BeerServiceImpl beerServiceImpl
              = new BeerServiceImpl();
+
+    @Test
+    void testCreateNewBeer() throws JsonProcessingException {
+
+
+        Beer beer = beerServiceImpl.listBeers().get(0);
+
+        System.out.println(objectMapper.writeValueAsString(beer));
+
+    }
 
     @Test
     void testListBeers() throws Exception {
