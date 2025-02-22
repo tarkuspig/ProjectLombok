@@ -4,6 +4,8 @@ import com.example.ProjectLombok.model.Beer;
 import com.example.ProjectLombok.model.Customer;
 import com.example.ProjectLombok.services.CustomerService;
 import com.example.ProjectLombok.services.CustomerServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CustomerController.class)
@@ -28,8 +31,32 @@ class CustomerControllerTest {
     @MockitoBean
     CustomerService customerService;
 
-    CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
+    CustomerServiceImpl customerServiceImpl;
 
+    @BeforeEach
+    void setUp(){
+        customerServiceImpl = new CustomerServiceImpl();
+    }
+
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Test
+    void testCreateNewCustomer() throws Exception{
+
+        Customer customer = customerServiceImpl.listCustomers().get(0);
+        customer.setId(null);
+        customer.setCustomerName(null);
+
+        given(customerService.saveNewCustomer(any(Customer.class))).willReturn(customerServiceImpl.listCustomers().get(1));
+
+        mockMvc.perform(post("/api/v1/customer")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customer)))
+                .andExpect(status().isCreated())
+                .andExpect(header().exists(("Location")));
+    }
     @Test
     void testListCustomers() throws Exception{
 
