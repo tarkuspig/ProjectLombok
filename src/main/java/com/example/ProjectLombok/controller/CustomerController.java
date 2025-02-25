@@ -29,11 +29,11 @@ public class CustomerController {
     //I did this without checking the tutorial.  It does work with the request body entered but this is not necessary
     //look at the beer example which shows there's no need for the @RequestBody annotation
     @DeleteMapping("{customerId}")
-    public ResponseEntity deleteCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer){
+    public ResponseEntity deleteCustomerById(@PathVariable("customerId") UUID customerId){
 
-        customerService.deleteCustomerById(customerId, customer);
+        customerService.deleteCustomerById(customerId);
 
-        return new ResponseEntity(HttpStatus.GONE);
+        return new ResponseEntity(HttpStatus. NO_CONTENT);
     }
 
     private final CustomerService customerService;
