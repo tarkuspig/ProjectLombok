@@ -64,6 +64,14 @@ public class BeerController {
         return beerService.listBeers();
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity handleNotFoundException(){
+
+        System.out.println("Exceptional heeftin");
+        return ResponseEntity.notFound().build();
+
+    }
+
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
     public Beer getBeerById(@PathVariable("beerId") UUID beerId){
 
