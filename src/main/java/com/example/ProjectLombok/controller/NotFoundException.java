@@ -1,5 +1,10 @@
 package com.example.ProjectLombok.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason= "Cannae find yer stauner nose deep in a lickoot")
+
 public class NotFoundException extends RuntimeException{
     public NotFoundException() {
     }
