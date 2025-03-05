@@ -1,9 +1,11 @@
 package com.example.ProjectLombok.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Customer {
     @Id
+    @GeneratedValue(generator = "UUID")
+    @UuidGenerator
     private UUID id;
     private String customerName;
 
