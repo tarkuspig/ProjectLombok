@@ -3,7 +3,6 @@ package com.example.ProjectLombok.entities;
 import com.example.ProjectLombok.model.BeerStyle;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
