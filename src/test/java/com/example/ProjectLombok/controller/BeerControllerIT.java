@@ -1,6 +1,7 @@
 package com.example.ProjectLombok.controller;
 
 import com.example.ProjectLombok.Repositories.BeerRepository;
+import com.example.ProjectLombok.mappers.BeerMapper;
 import com.example.ProjectLombok.model.BeerDTO;
 import com.example.ProjectLombok.entities.Beer;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,25 @@ class BeerControllerIT {
 
     @Autowired
     BeerRepository beerRepository;
+
+    @Autowired
+    BeerMapper beerMapper;
+
+    @Test
+    void updateExistingBeer(){
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
+        beerDTO.setId(null);
+        beerDTO.setVersion(null);
+        final String beerName = "UPDATED";
+        beerDTO.setBeerName(beerName);
+
+        ResponseEntity responseEntity = beerController.updateById(beer.getId(), beerDTO);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        Beer updatedBeer = beerRepository.findById(beer.getId()).get();
+        assertThat(updatedBeer.getBeerName()).isEqualTo(beerName);
+    }
 
     @Test
     void testListBeers(){
@@ -86,5 +106,7 @@ class BeerControllerIT {
         assertThat(beer).isNotNull();
 
     }
+
+
 
 }
