@@ -4,6 +4,7 @@ import com.example.ProjectLombok.Repositories.BeerRepository;
 import com.example.ProjectLombok.Repositories.CustomerRepository;
 import com.example.ProjectLombok.entities.Beer;
 import com.example.ProjectLombok.entities.Customer;
+import com.example.ProjectLombok.model.BeerDTO;
 import com.example.ProjectLombok.model.BeerStyle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -57,7 +59,32 @@ public class BootstrapData implements CommandLineRunner {
                     .createdDate(LocalDateTime.now())
                     .updateDate(LocalDateTime.now())
                     .build();
+
+            Beer beer1 = Beer.builder()
+                    .beerName("Galaxy Cat")
+                    .beerStyle(BeerStyle.PALE_ALE)
+                    .upc("12356")
+                    .price(new BigDecimal("12.99"))
+                    .quantityOnHand(122)
+                    .createdDate(LocalDateTime.now())
+                    .updateDate(LocalDateTime.now())
+                    .build();
+
+            Beer beer2 = Beer.builder()
+                    .beerName("Crank")
+                    .beerStyle(BeerStyle.PALE_ALE)
+                    .upc("12356222")
+                    .price(new BigDecimal("11.99"))
+                    .quantityOnHand(392)
+                    .createdDate(LocalDateTime.now())
+                    .updateDate(LocalDateTime.now())
+                    .build();
+
+
+
             beerRepository.save(beer);
+            beerRepository.save(beer1);
+            beerRepository.save(beer2);
         }
     }
 

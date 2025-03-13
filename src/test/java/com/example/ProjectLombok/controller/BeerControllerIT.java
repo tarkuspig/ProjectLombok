@@ -32,6 +32,46 @@ class BeerControllerIT {
     BeerMapper beerMapper;
 
     @Test
+    void testDeleteByIdNotFound(){
+        assertThrows(NotFoundException.class, () -> {
+            beerController.deleteById(UUID.randomUUID());
+        });
+
+    }
+
+    @Rollback
+    @Transactional
+    @Test
+    void testDeleteByIdFound(){
+        Beer beer = beerRepository.findAll().get(0);
+        ResponseEntity responseEntity = beerController.deleteById(beer.getId());
+
+        assertThat(beerRepository.findById(beer.getId()).isEmpty());
+
+
+        //The code below and the initial two lines of the test were completely written by me by my own intuition
+        //Above is the implementation as the course shows but I think mine is okay
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+        List<BeerDTO> dtos = beerController.listBeers();
+
+        assertThat(dtos.size()).isEqualTo(2);
+
+
+
+
+    }
+
+    @Test
+    void testUpdateNotFound(){
+        assertThrows(NotFoundException.class, () -> {
+            beerController.updateById(UUID.randomUUID(), BeerDTO.builder().build());
+        });
+
+    }
+
+    @Rollback
+    @Transactional
+    @Test
     void updateExistingBeer(){
         Beer beer = beerRepository.findAll().get(0);
         BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
@@ -51,7 +91,7 @@ class BeerControllerIT {
     void testListBeers(){
         List<BeerDTO> dtos = beerController.listBeers();
 
-        assertThat(dtos.size()).isEqualTo(1);
+        assertThat(dtos.size()).isEqualTo(3);
     }
 
     @Rollback
